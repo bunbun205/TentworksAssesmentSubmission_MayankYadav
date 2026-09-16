@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -5,16 +6,21 @@ using UnityEngine.UI;
 
 public class OrderGenerator : MonoBehaviour
 {
-    [Header("Ingredient Pool")] 
+    [Header("Ingredient Pool")]
     [SerializeField] private List<IngredientData> availableIngredients;
 
-    [Header("Display")] 
+    [Header("Timing")]
+    [SerializeField] private float respawnDelay = 5f;
+
+    [Header("Display")]
     [SerializeField] private Canvas orderCanvas;
     [SerializeField] private List<Image> iconSlots;
     [SerializeField] private TextMeshProUGUI ageTimerText;
-    
+
     public Order CurrentOrder { get; private set; }
     public bool HasOrder => CurrentOrder != null;
+
+    private Coroutine _respawnRoutine;
 
     private void Awake()
     {
@@ -28,13 +34,13 @@ public class OrderGenerator : MonoBehaviour
         int age = Mathf.FloorToInt(Time.time - CurrentOrder.StartTime);
         ageTimerText.text = age.ToString();
     }
-    
+
     public void GenerateOrder()
     {
-        int ingredientCount = Random.value < 0.5 ? 2 : 3;
+        int ingredientCount = Random.value < 0.5f ? 2 : 3;
         List<IngredientData> required = new List<IngredientData>(ingredientCount);
-        
-        for(int i = 0; i < ingredientCount; i++)
+
+        for (int i = 0; i < ingredientCount; i++)
             required.Add(availableIngredients[Random.Range(0, availableIngredients.Count)]);
 
         CurrentOrder = new Order(required);
@@ -46,6 +52,16 @@ public class OrderGenerator : MonoBehaviour
     {
         CurrentOrder = null;
         orderCanvas.enabled = false;
+
+        if (_respawnRoutine != null)
+            StopCoroutine(_respawnRoutine);
+        _respawnRoutine = StartCoroutine(RespawnRoutine());
+    }
+
+    private IEnumerator RespawnRoutine()
+    {
+        yield return new WaitForSeconds(respawnDelay);
+        GenerateOrder();
     }
 
     public void RefreshDisplay()
