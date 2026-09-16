@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 054cec284b63b6c9aa46c84811a44f1e, type: 3}
+  m_Name: Vegetables
+  m_EditorClassIdentifier: Assembly-CSharp::IngredientData
+  type: 0
+  prepRequired: 1
+  prepTime: 2
+  prepType: 1
+  score: 0
+  unpreppedMat: {fileID: 2100000, guid: 2e95a00390949b9d28ee6abfea23b41c, type: 2}
+  preppedMat: {fileID: 2100000, guid: 233c5ed59209247ca8fbeb9342fcbb2d, type: 2}
+  icon: {fileID: -825089144, guid: 9584aa074f94fba4fa4ee517bef00ea4, type: 3}
